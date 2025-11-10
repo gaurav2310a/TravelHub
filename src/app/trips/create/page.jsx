@@ -5,6 +5,9 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { MapPin, Calendar, Users, DollarSign, Plus, X, Image as ImageIcon } from 'lucide-react';
+import AIItineraryGenerator from '@/app/components/AIItineraryGenerator';
+import AIBudgetOptimizer from '@/app/components/AIBudgetOptimizer';
+import AITravelTips from '@/app/components/AITravelTips';
 
 export default function CreateTripPage() {
   const router = useRouter();
@@ -459,9 +462,45 @@ export default function CreateTripPage() {
               </div>
             </div>
 
+            {/* AI Budget Optimizer */}
+            <AIBudgetOptimizer 
+              tripDetails={{
+                destination: formData.destination,
+                duration: calculateDuration(),
+                currentBudget: formData.budget,
+                activities: formData.activities
+              }}
+              onUpdateBudget={(range) => {
+                const avgBudget = Math.round((range.min + range.max) / 2);
+                setFormData(prev => ({ ...prev, budget: avgBudget.toString() }));
+              }}
+            />
+
+            {/* AI Travel Tips */}
+            <AITravelTips 
+              destination={formData.destination}
+              travelDates={formData.startDate && formData.endDate ? `${formData.startDate} to ${formData.endDate}` : ''}
+              travelers={formData.maxParticipants}
+            />
+
+            {/* AI Itinerary Generator */}
+            <AIItineraryGenerator 
+              destination={formData.destination}
+              onApplyItinerary={(aiItinerary) => {
+                if (aiItinerary.days) {
+                  const newItinerary = aiItinerary.days.map(day => ({
+                    day: day.day,
+                    title: day.title || '',
+                    activities: day.activities || ['']
+                  }));
+                  setFormData(prev => ({ ...prev, itinerary: newItinerary }));
+                }
+              }}
+            />
+
             {/* Itinerary */}
             <div>
-              <label className="block text-sm font-semibold mb-2">Itinerary</label>
+              <label className="block text-sm font-semibold mb-2">Itinerary (Manual Entry)</label>
               <div className="space-y-4">
                 {formData.itinerary.map((day, dayIndex) => (
                   <div key={dayIndex} className="border dark:border-gray-700 rounded-lg p-4">

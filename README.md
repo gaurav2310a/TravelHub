@@ -17,6 +17,16 @@ A modern, feature-rich travel platform built with Next.js, React, and Tailwind C
 - **🔐 Authentication**: Secure user authentication and profile management
 - **📸 Trip Sharing**: Create and share your travel experiences with photos
 
+### 🤖 AI-Powered Features (NEW!)
+
+- **🧠 AI Travel Assistant**: 24/7 chatbot for travel questions and recommendations
+- **✨ AI Destination Suggestions**: Personalized destination recommendations based on your preferences
+- **📅 AI Itinerary Generator**: Automatic day-by-day trip planning with activities and tips
+- **💡 AI Travel Tips**: Smart, context-aware tips for any destination
+- **💰 AI Budget Optimizer**: Intelligent budget breakdown and money-saving suggestions
+- **🎯 AI Activity Suggestions**: Personalized activity recommendations
+- **🎒 AI Packing Lists**: Smart packing suggestions based on destination and season
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -37,12 +47,21 @@ cd travel
 npm install
 ```
 
-3. Run the development server:
+3. Set up environment variables (for AI features):
+```bash
+# Create .env.local file in the root directory
+# Add your OpenAI API key:
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+**Note**: AI features require an OpenAI API key. See [AI_SETUP.md](./AI_SETUP.md) for detailed setup instructions.
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## 📁 Project Structure
 
@@ -82,6 +101,7 @@ travel/
 - **Tailwind CSS 3.4** - Utility-first CSS framework
 - **Lucide React** - Beautiful icon library
 - **Framer Motion** - Animation library
+- **OpenAI API** - AI-powered features (GPT-3.5-turbo)
 - **JWT** - JSON Web Tokens for authentication
 - **bcryptjs** - Password hashing
 - **Lodash** - Utility functions (debounce)

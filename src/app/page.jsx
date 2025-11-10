@@ -7,6 +7,8 @@ import debounce from 'lodash.debounce';
 import Link from 'next/link';
 import { getFeaturedTrips } from '@/lib/communityTrips';
 import { formatINR } from '@/lib/trips';
+import AIAssistant from '@/app/components/AIAssistant';
+import AIDestinationSuggestions from '@/app/components/AIDestinationSuggestions';
 
 const destinations = [
   {
@@ -195,7 +197,7 @@ const PopularDestinations = ({ darkMode }) => {
             Popular Community Trips
           </h2>
           <Link 
-            href="/community" 
+            href="/explore" 
             className="flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
           >
             View all trips
@@ -442,6 +444,16 @@ export default function Home() {
                     <span>Filters</span>
                   </button>
                 </div>
+              </div>
+              
+              {/* AI Suggestions Button */}
+              <div className="mt-4 text-center">
+                <AIDestinationSuggestions 
+                  onSelectDestination={(dest) => {
+                    setLocalSearchQuery(dest.name || '');
+                    setSearchQuery(dest.name || '');
+                  }}
+                />
               </div>
               
               {/* Filter Panel */}
@@ -745,6 +757,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* AI Travel Assistant */}
+      <AIAssistant />
     </div>
   );
 }
