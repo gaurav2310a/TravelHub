@@ -1,13 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { Image, MapPin, Calendar, Tag, Edit3 } from 'lucide-react';
+import { useTravelData } from '@/context/TravelDataContext';
+import { Image, MapPin, Calendar, Tag, Edit3, Save, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function CreateStory() {
   const router = useRouter();
   const { currentUser } = useAuth();
+  const { addStory } = useTravelData();
   const [loading, setLoading] = useState(false);
   const [storyData, setStoryData] = useState({
     title: '',
@@ -18,12 +21,33 @@ export default function CreateStory() {
     tags: '',
   });
 
+  // Load draft from localStorage
+  useEffect(() => {
+    const savedDraft = localStorage.getItem('storyDraft');
+    if (savedDraft) {
+      try {
+        setStoryData(JSON.parse(savedDraft));
+      } catch (error) {
+        console.error('Failed to load draft:', error);
+      }
+    }
+  }, []);
+
+  // Auto-save draft to localStorage
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      localStorage.setItem('storyDraft', JSON.stringify(storyData));
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [storyData]);
+
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     // In a real app, you would upload these to a storage service
     setStoryData(prev => ({
       ...prev,
-      images: [...prev.images, ...files]
+      images: [...prev.images, ...files.map(f => f.name)]
     }));
   };
 
@@ -32,15 +56,18 @@ export default function CreateStory() {
     setLoading(true);
 
     try {
-      // In a real app, you would send this to your API
-      console.log('Story Data:', {
+      const newStory = addStory({
         ...storyData,
         authorId: currentUser?.id,
-        createdAt: new Date().toISOString()
+        authorName: currentUser?.name,
+        authorPhoto: currentUser?.profilePhoto,
       });
       
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Clear draft after successful submission
+      localStorage.removeItem('storyDraft');
       
       router.push('/community/stories');
     } catch (error) {

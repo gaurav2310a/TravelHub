@@ -1,9 +1,13 @@
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || '',
-});
+// Initialize Google Generative AI client using environment variable for the API key.
+// Make sure you set GOOGLE_API_KEY in your local `.env.local` (do NOT commit secrets).
+if (!process.env.GOOGLE_API_KEY) {
+  throw new Error('GOOGLE_API_KEY environment variable is not set. Please add it to .env.local');
+}
+
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
 /**
  * Generate AI-powered destination suggestions based on user preferences
@@ -28,14 +32,10 @@ For each destination, provide:
 
 Format as JSON array.`;
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.8,
-      max_tokens: 1500,
-    });
-
-    return JSON.parse(response.choices[0].message.content);
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
+    return JSON.parse(text);
   } catch (error) {
     console.error('AI destination suggestions error:', error);
     return null;
@@ -60,14 +60,10 @@ For each day, provide:
 
 Format as JSON with structure: { days: [{ day: number, title: string, activities: [], tips: [], estimatedCost: string }] }`;
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7,
-      max_tokens: 2000,
-    });
-
-    return JSON.parse(response.choices[0].message.content);
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
+    return JSON.parse(text);
   } catch (error) {
     console.error('AI itinerary generation error:', error);
     return null;
@@ -94,14 +90,10 @@ Include tips about:
 
 Format as JSON array: [{ category: string, tip: string, importance: 'high'|'medium'|'low' }]`;
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7,
-      max_tokens: 1200,
-    });
-
-    return JSON.parse(response.choices[0].message.content);
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
+    return JSON.parse(text);
   } catch (error) {
     console.error('AI travel tips error:', error);
     return null;
@@ -130,14 +122,10 @@ Provide:
 
 Format as JSON with structure: { breakdown: {}, savingTips: [], alternatives: [], estimatedRange: { min: number, max: number }, bookingTips: [] }`;
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.6,
-      max_tokens: 1500,
-    });
-
-    return JSON.parse(response.choices[0].message.content);
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
+    return JSON.parse(text);
   } catch (error) {
     console.error('AI budget optimization error:', error);
     return null;
@@ -161,14 +149,10 @@ Consider:
 
 Format as JSON array: [{ name: string, type: string, reason: string, matchScore: number }]`;
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.8,
-      max_tokens: 800,
-    });
-
-    return JSON.parse(response.choices[0].message.content);
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
+    return JSON.parse(text);
   } catch (error) {
     console.error('AI search suggestions error:', error);
     return null;
@@ -180,10 +164,7 @@ Format as JSON array: [{ name: string, type: string, reason: string, matchScore:
  */
 export async function travelAssistant(question, conversationHistory = []) {
   try {
-    const messages = [
-      {
-        role: 'system',
-        content: `You are a knowledgeable and friendly travel assistant. Help users with:
+    const systemPrompt = `You are a knowledgeable and friendly travel assistant. Help users with:
 - Destination recommendations
 - Travel planning and itineraries
 - Budget advice
@@ -193,20 +174,18 @@ export async function travelAssistant(question, conversationHistory = []) {
 - Packing suggestions
 - Local experiences
 
-Be concise, practical, and enthusiastic. Provide specific, actionable advice.`
-      },
-      ...conversationHistory,
-      { role: 'user', content: question }
-    ];
+Be concise, practical, and enthusiastic. Provide specific, actionable advice.`;
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages,
-      temperature: 0.7,
-      max_tokens: 500,
+    // Build conversation text for Gemini
+    let conversationText = systemPrompt + '\n\n';
+    conversationHistory.forEach(msg => {
+      conversationText += `${msg.role}: ${msg.content}\n`;
     });
+    conversationText += `user: ${question}`;
 
-    return response.choices[0].message.content;
+    const result = await model.generateContent(conversationText);
+    const response = result.response;
+    return response.text();
   } catch (error) {
     console.error('AI travel assistant error:', error);
     return 'I apologize, but I\'m having trouble processing your request right now. Please try again.';
@@ -238,14 +217,10 @@ For each activity, provide:
 
 Format as JSON array.`;
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.8,
-      max_tokens: 1500,
-    });
-
-    return JSON.parse(response.choices[0].message.content);
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
+    return JSON.parse(text);
   } catch (error) {
     console.error('AI activity suggestions error:', error);
     return null;
@@ -275,14 +250,10 @@ Categorize items into:
 
 Format as JSON: { categories: [{ name: string, items: [{ item: string, essential: boolean, notes: string }] }] }`;
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.6,
-      max_tokens: 1200,
-    });
-
-    return JSON.parse(response.choices[0].message.content);
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
+    return JSON.parse(text);
   } catch (error) {
     console.error('AI packing list error:', error);
     return null;

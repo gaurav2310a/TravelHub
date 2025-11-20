@@ -2,15 +2,15 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// Mock user database - In production, use a real database
+// Mock user database
 const users = [
   {
     id: 1,
     name: 'Rahul Kapoor',
     email: 'rahul.kapoor@example.com',
-    password: '$2a$10$XqwSfKz.KJxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKx', // hashed_password
+    password: '123456789', // hashed_password
     profilePhoto: 'https://randomuser.me/api/portraits/men/32.jpg',
-    role: 'traveler',
+    role: 'Traveler',
     location: 'Mumbai, India',
     bio: 'Adventure seeker and food enthusiast',
     interests: ['Backpacking', 'Photography', 'Food'],
@@ -21,13 +21,26 @@ const users = [
     id: 2,
     name: 'Priya Sharma',
     email: 'priya.sharma@example.com',
-    password: '$2a$10$XqwSfKz.KJxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKxKx',
+    password: '123456789',
     profilePhoto: 'https://randomuser.me/api/portraits/women/44.jpg',
-    role: 'traveler',
+    role: 'Traveler',
     location: 'Delhi, India',
     bio: 'Solo traveler exploring the world',
     interests: ['Solo Travel', 'Culture', 'History'],
     languagesSpoken: ['English', 'Hindi', 'Spanish'],
+    verified: true
+  },
+  {
+    id: 3,
+    name: 'Gaurav Aggarwal',
+    email: 'gauravaggarwal12349@gmail.com',
+    password: '123456789', // hashed_password
+    profilePhoto: 'https://randomuser.me/api/portraits/men/32.jpg',
+    role: 'Traveler',
+    location: 'Delhi, India',
+    bio: 'Adventure seeker and food enthusiast',
+    interests: ['Backpacking', 'Photography', 'Food'],
+    languagesSpoken: ['English', 'Hindi'],
     verified: true
   }
 ];

@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from 'next/font/google';
 import { AuthProvider } from "@/context/AuthContext";
 import { TravelProvider } from "@/context/TravelContext";
+import { TravelDataProvider } from "@/context/TravelDataContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -17,11 +18,13 @@ export default function RootLayout({ children }) {
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} antialiased`}>
         <AuthProvider>
-          <TravelProvider>
-            <Header />
-            <main className="min-h-[60vh]">{children}</main>
-            <Footer />
-          </TravelProvider>
+          <TravelDataProvider>
+            <TravelProvider>
+              <Header />
+              <main className="min-h-[60vh]">{children}</main>
+              <Footer />
+            </TravelProvider>
+          </TravelDataProvider>
         </AuthProvider>
       </body>
     </html>

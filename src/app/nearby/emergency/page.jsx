@@ -38,7 +38,8 @@ export default function EmergencyPage() {
     { country: 'India', number: '112', description: 'Emergency Services' },
     { country: 'USA/Canada', number: '911', description: 'Police, Fire, Medical' },
     { country: 'UK', number: '999', description: 'Emergency Services' },
-    { country: 'EU', number: '112', description: 'Emergency Services' }
+    { country: 'EU', number: '112', description: 'Emergency Services' },
+    { country: 'TRAVIO SUPPORT', number: '9876543210', description: 'CUSTOMER SUPPORT SERVICES' }
   ];
 
   return (
@@ -60,6 +61,9 @@ export default function EmergencyPage() {
           <p className="text-white/90 mb-6">In case of immediate danger, press the button below</p>
           <button className="px-12 py-4 bg-white text-red-600 font-bold text-xl rounded-2xl hover:bg-red-50 transition-all hover:scale-105 shadow-lg">
             🆘 ACTIVATE SOS
+          </button>
+          <button className="px-12 py-4 bg-white text-red-600 font-bold text-xl rounded-2xl hover:bg-red-50 transition-all hover:scale-105 shadow-lg">
+            CONTACT SUPPORT
           </button>
           <p className="text-sm text-white/70 mt-4">This will alert your emergency contacts and local authorities</p>
         </div>

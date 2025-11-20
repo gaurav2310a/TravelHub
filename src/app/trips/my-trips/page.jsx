@@ -1,57 +1,34 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
+import { useTravelData } from '@/context/TravelDataContext';
 import { Calendar, MapPin, Users, DollarSign, Clock, Edit, Trash2, Share2, Plus, Filter } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function MyTripsPage() {
+  const { currentUser } = useAuth();
+  const { getMyTrips } = useTravelData();
   const [activeTab, setActiveTab] = useState('upcoming');
+  const [myTrips, setMyTrips] = useState([]);
+
+  useEffect(() => {
+    if (currentUser) {
+      const trips = getMyTrips(currentUser.id);
+      setMyTrips(trips);
+    }
+  }, [currentUser]);
 
   const trips = {
-    upcoming: [
-      {
-        id: 1,
-        title: 'Backpacking Through Southeast Asia',
-        destination: 'Thailand, Vietnam, Cambodia',
-        image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=800',
-        startDate: '2024-12-15',
-        endDate: '2025-01-05',
-        duration: '21 days',
-        budget: '$1,200',
-        travelers: 4,
-        status: 'confirmed',
-        progress: 75
-      },
-      {
-        id: 2,
-        title: 'European Art & Culture Tour',
-        destination: 'Paris, Rome, Barcelona',
-        image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800',
-        startDate: '2025-02-10',
-        endDate: '2025-02-24',
-        duration: '14 days',
-        budget: '$3,500',
-        travelers: 2,
-        status: 'planning',
-        progress: 45
-      }
-    ],
-    ongoing: [],
-    completed: [
-      {
-        id: 3,
-        title: 'Tokyo Food Adventure',
-        destination: 'Tokyo, Japan',
-        image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800',
-        startDate: '2024-10-01',
-        endDate: '2024-10-08',
-        duration: '8 days',
-        budget: '$2,200',
-        travelers: 3,
-        status: 'completed',
-        rating: 5
-      }
-    ]
+    upcoming: myTrips.filter(t => new Date(t.startDate) > new Date()),
+    ongoing: myTrips.filter(t => {
+      const start = new Date(t.startDate);
+      const end = new Date(t.endDate);
+      const now = new Date();
+      return start <= now && end >= now;
+    }),
+    completed: myTrips.filter(t => new Date(t.endDate) < new Date())
   };
 
   const stats = [

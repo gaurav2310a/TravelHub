@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// Mock user storage - In production, use a real database
+// Mock user storage
 let users = [];
 
 export async function POST(request) {
@@ -36,7 +36,7 @@ export async function POST(request) {
       email: userData.email,
       password: hashedPassword,
       profilePhoto: userData.profilePhoto || `https://randomuser.me/api/portraits/lego/${Math.floor(Math.random() * 10)}.jpg`,
-      role: userData.role || 'traveler',
+      role: userData.role || 'Traveler',
       location: userData.location,
       bio: userData.bio || '',
       interests: userData.interests || [],

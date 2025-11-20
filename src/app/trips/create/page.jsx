@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useTravelData } from '@/context/TravelDataContext';
 import { MapPin, Calendar, Users, DollarSign, Plus, X, Image as ImageIcon } from 'lucide-react';
 import AIItineraryGenerator from '@/app/components/AIItineraryGenerator';
 import AIBudgetOptimizer from '@/app/components/AIBudgetOptimizer';
@@ -12,6 +13,7 @@ import AITravelTips from '@/app/components/AITravelTips';
 export default function CreateTripPage() {
   const router = useRouter();
   const { currentUser, isAuthenticated } = useAuth();
+  const { addTrip } = useTravelData();
   const [formData, setFormData] = useState({
     title: '',
     destination: '',
@@ -32,6 +34,27 @@ export default function CreateTripPage() {
   const [activityInput, setActivityInput] = useState('');
   const [tagInput, setTagInput] = useState('');
   const [imageInput, setImageInput] = useState('');
+
+  // Load draft from localStorage
+  useEffect(() => {
+    const savedDraft = localStorage.getItem('tripDraft');
+    if (savedDraft) {
+      try {
+        setFormData(JSON.parse(savedDraft));
+      } catch (error) {
+        console.error('Failed to load draft:', error);
+      }
+    }
+  }, []);
+
+  // Auto-save draft to localStorage
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      localStorage.setItem('tripDraft', JSON.stringify(formData));
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [formData]);
 
   if (!isAuthenticated) {
     return (
@@ -177,16 +200,20 @@ export default function CreateTripPage() {
     };
 
     try {
-      const response = await fetch('/api/trips', {
+      // Save to localStorage via TravelDataContext
+      const newTrip = addTrip(tripData);
+      
+      // Also try to save to API
+      await fetch('/api/trips', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(tripData)
-      });
+      }).catch(err => console.log('API save optional:', err));
 
-      if (response.ok) {
-        const newTrip = await response.json();
-        router.push(`/community/trips/${newTrip.id}`);
-      }
+      // Clear draft after successful submission
+      localStorage.removeItem('tripDraft');
+      
+      router.push(`/community/trips/${newTrip.id}`);
     } catch (error) {
       console.error('Error creating trip:', error);
       alert('Failed to create trip. Please try again.');

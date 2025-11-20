@@ -1,59 +1,55 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useTravelData } from '@/context/TravelDataContext';
 import { Search, Heart, MessageCircle, Bookmark, Share2, Plus, Filter, TrendingUp, Eye } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function TravelStoriesPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [allStories, setAllStories] = useState([]);
+  const { stories: contextStories } = useTravelData();
 
-  const stories = [
-    {
-      id: 1,
-      title: 'Solo Backpacking Across Europe: Lessons Learned',
-      excerpt: 'My 3-month journey through 15 European countries taught me more about myself than any book ever could...',
-      author: 'Sarah Mitchell',
-      avatar: 'https://i.pravatar.cc/150?img=20',
-      coverImage: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800',
-      category: 'Adventure',
-      readTime: '8 min read',
-      likes: 234,
-      comments: 45,
-      views: 1234,
-      date: '2 days ago',
-      tags: ['Europe', 'Solo Travel', 'Backpacking']
-    },
-    {
-      id: 2,
-      title: 'Finding Peace in the Himalayas',
-      excerpt: 'A spiritual journey that changed my perspective on life and travel...',
-      author: 'Raj Patel',
-      avatar: 'https://i.pravatar.cc/150?img=21',
-      coverImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
-      category: 'Culture',
-      readTime: '12 min read',
-      likes: 567,
-      comments: 89,
-      views: 3421,
-      date: '5 days ago',
-      tags: ['Himalayas', 'Spiritual', 'Trekking']
-    },
-    {
-      id: 3,
-      title: 'Island Hopping in Greece: A Food Lover\'s Guide',
-      excerpt: 'Discovering authentic Greek cuisine one island at a time...',
-      author: 'Elena Papadopoulos',
-      avatar: 'https://i.pravatar.cc/150?img=22',
-      coverImage: 'https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=800',
-      category: 'Food',
-      readTime: '10 min read',
-      likes: 890,
-      comments: 123,
-      views: 5678,
-      date: '1 week ago',
-      tags: ['Greece', 'Food', 'Islands']
-    }
-  ];
+  useEffect(() => {
+    // Combine context stories with demo stories
+    const demoStories = [
+      {
+        id: 'demo-1',
+        title: 'Solo Backpacking Across Europe: Lessons Learned',
+        excerpt: 'My 3-month journey through 15 European countries taught me more about myself than any book ever could...',
+        author: 'Sarah Mitchell',
+        avatar: 'https://i.pravatar.cc/150?img=20',
+        coverImage: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800',
+        category: 'Adventure',
+        readTime: '8 min read',
+        likes: 234,
+        comments: 45,
+        views: 1234,
+        date: '2 days ago',
+        tags: ['Europe', 'Solo Travel', 'Backpacking']
+      },
+      {
+        id: 'demo-2',
+        title: 'Finding Peace in the Himalayas',
+        excerpt: 'A spiritual journey that changed my perspective on life and travel...',
+        author: 'Raj Patel',
+        avatar: 'https://i.pravatar.cc/150?img=21',
+        coverImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
+        category: 'Culture',
+        readTime: '12 min read',
+        likes: 567,
+        comments: 89,
+        views: 3421,
+        date: '5 days ago',
+        tags: ['Himalayas', 'Spiritual', 'Trekking']
+      }
+    ];
+
+    setAllStories([...contextStories, ...demoStories]);
+  }, [contextStories]);
+
+  const stories = allStories;
 
   const categories = ['all', 'Adventure', 'Culture', 'Food', 'Nature', 'Tips', 'Guides'];
 

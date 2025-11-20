@@ -11,6 +11,7 @@ export default function ExploreFilters({ onFilterChange }) {
     rating: null,
     amenities: [],
     season: [],
+    destinations: [],
   });
 
   const handleFilterChange = (category, value) => {
@@ -25,6 +26,8 @@ export default function ExploreFilters({ onFilterChange }) {
     setFilters(newFilters);
     onFilterChange?.(newFilters);
   };
+
+  
 
   const FilterSection = ({ title, icon: Icon, options, category, type = 'checkbox' }) => (
     <div className="py-4 border-b border-gray-200 dark:border-gray-700">

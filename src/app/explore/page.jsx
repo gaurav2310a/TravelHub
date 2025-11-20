@@ -196,55 +196,35 @@ export default function ExplorePage() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTEyYzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-10"></div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 animate-fade-in-up">
-              Explore Amazing Trips
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
+              Discover Your Next Adventure
             </h1>
-            <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-              Discover curated travel experiences from adventurers around the world
+            <p className="text-white/90 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
+              Browse amazing trips planned by travelers around the world
             </p>
 
             {/* Search Bar */}
-            <div className="max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <div className="relative glass-effect rounded-2xl p-2 bg-white/10 backdrop-blur-xl border border-white/20">
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <div className="flex-1 relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                    <input
-                      type="text"
-                      placeholder="Search destinations, trips, travelers..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
-                    />
-                  </div>
-                  <button className="px-6 py-3.5 bg-white text-purple-600 font-semibold rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-200">
-                    Search
-                  </button>
+            <div className="max-w-2xl mx-auto">
+              <div className="flex flex-col sm:flex-row gap-2 bg-white/10 backdrop-blur-sm rounded-xl p-2 border border-white/20">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/70" />
+                  <input
+                    type="text"
+                    placeholder="Search trips, destinations..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 bg-white/90 border-0 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
+                  />
                 </div>
+                <button className="px-6 py-3 bg-white text-purple-600 font-semibold rounded-lg hover:bg-gray-100 transition-all">
+                  Search
+                </button>
               </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12 max-w-4xl mx-auto">
-              {[
-                { icon: <Globe className="w-6 h-6" />, value: '1,234', label: 'Trips' },
-                { icon: <Users className="w-6 h-6" />, value: '5,678', label: 'Travelers' },
-                { icon: <MapPin className="w-6 h-6" />, value: '156', label: 'Countries' },
-                { icon: <TrendingUp className="w-6 h-6" />, value: '89%', label: 'Match Rate' }
-              ].map((stat, idx) => (
-                <div key={idx} className="glass-effect bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 text-center hover:bg-white/20 transition-all duration-200">
-                  <div className="flex justify-center mb-2">{stat.icon}</div>
-                  <div className="text-2xl font-bold">{stat.value}</div>
-                  <div className="text-sm text-white/80">{stat.label}</div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -283,6 +263,7 @@ export default function ExplorePage() {
           <div className="flex-1">
             {/* Filters Header */}
             <div className="flex items-center justify-between mb-8">
+              
               <div className="flex items-center gap-2">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                   {selectedCategory === 'all' ? 'All Trips' : categories.find(c => c.id === selectedCategory)?.name + ' Trips'}

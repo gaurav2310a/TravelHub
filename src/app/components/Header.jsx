@@ -91,7 +91,9 @@ export default function Header() {
                 <div className="relative group">
                   <button className="px-4 py-2 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gradient-to-r hover:from-green-50 hover:to-cyan-50 dark:hover:from-gray-800 dark:hover:to-gray-700 transition-all duration-200 flex items-center gap-2">
                     <MapPin className="w-4 h-4" />
+                    <Link href="/nearby/search" >
                     Nearby
+                    </Link>
                   </button>
                   <div className="absolute top-full left-0 mt-2 w-56 py-2 glass-effect bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200/20 dark:border-gray-700/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2 transition-all duration-300 z-50">
                     <div className="px-3 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
@@ -151,14 +153,19 @@ export default function Header() {
 
               {isAuthenticated ? (
                 <>
-                  <Link href={`/community/users/${currentUser.id}`} className="hidden md:flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all">
-                    <img
-                      src={currentUser.profilePhoto}
-                      alt={currentUser.name}
-                      className="w-9 h-9 rounded-full object-cover border-2 border-blue-600 shadow-md"
-                    />
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white">{currentUser.name}</span>
-                  </Link>
+                  <div className="hidden md:flex items-center gap-2">
+                    {/* <Link href="/profile" className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all">
+                      My Profile
+                    </Link> */}
+                    <Link href='/profile' className="hidden md:flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all">
+                      <img
+                        src={currentUser.profilePhoto}
+                        alt={currentUser.name}
+                        className="w-9 h-9 rounded-full object-cover border-2 border-blue-600 shadow-md"
+                      />
+                      <span className="text-sm font-semibold text-gray-900 dark:text-white">{currentUser.name}</span>
+                    </Link>
+                  </div>
                   <button
                     onClick={logout}
                     className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all"
@@ -176,9 +183,7 @@ export default function Header() {
                     Sign up
                   </Link>
                 </>
-              )}
-
-              {/* Mobile Menu Button */}
+              )}              {/* Mobile Menu Button */}
               <button 
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 lg:hidden transition-colors"
@@ -252,7 +257,9 @@ export default function Header() {
               {/* Nearby Section */}
               <div className="pt-2">
                 <div className="px-3 py-2 text-xs font-bold text-gray-400 uppercase tracking-widest">
-                  Discover Nearby
+                  <Link href="/nearby/search" className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                    Discover Nearby
+                  </Link>
                 </div>
                 <div className="space-y-1">
                   <Link href="/nearby/search" className="block px-4 py-3 rounded-xl text-sm font-semibold text-blue-600 dark:text-blue-400 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:hover:from-gray-700 dark:hover:to-gray-600 transition-all duration-200 border-2 border-dashed border-blue-300 dark:border-blue-700">
@@ -289,7 +296,10 @@ export default function Header() {
             <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 space-y-3">
               {isAuthenticated ? (
                 <>
-                  <Link href={`/community/users/${currentUser.id}`} className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                  {/* <Link href="/profile" className="block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                    👤 My Profile
+                  </Link> */}
+                  <Link href="/profile" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                     <img
                       src={currentUser.profilePhoto}
                       alt={currentUser.name}

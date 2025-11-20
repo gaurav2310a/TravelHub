@@ -460,16 +460,16 @@ export default function Home() {
               {showFilters && (
                 <div className="mt-4 p-6 rounded-2xl glass-effect shadow-2xl animate-fade-in-up">
                   <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-xl font-bold text-white">Filter & Sort</h3>
+                    <h3 className="text-xl font-bold text-black">Filter & Sort</h3>
                     <div className="flex items-center space-x-4">
                       <div>
-                        <label className="block text-sm font-medium mb-2 text-white/80">
+                        <label className="block text-sm font-medium mb-2 text-black/80">
                           Sort By
                         </label>
                         <select
                           value={filters.sort || 'popular'}
                           onChange={(e) => handleFilterChange('sort', e.target.value)}
-                          className="text-sm px-4 py-2 rounded-lg bg-white/10 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
+                          className="text-sm px-4 py-2 rounded-lg bg-blue-600 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
                         >
                           {sortOptions.map(option => (
                             <option key={option.id} value={option.id}>
@@ -480,7 +480,7 @@ export default function Home() {
                       </div>
                       <button
                         onClick={resetFilters}
-                        className="text-sm font-medium text-yellow-300 hover:text-yellow-200 transition-colors"
+                        className="text-sm font-medium text-red-400 hover:text-red-600 transition-colors"
                       >
                         Reset All
                       </button>
@@ -490,13 +490,13 @@ export default function Home() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {/* Price Range */}
                     <div>
-                      <label className="block text-sm font-medium mb-2 text-white/80">
+                      <label className="block text-sm font-medium mb-2 text-black/80">
                         Price Range
                       </label>
                       <select
                         value={filters.priceRange}
                         onChange={(e) => handleFilterChange('priceRange', e.target.value)}
-                        className="w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
+                        className="w-full px-3 py-2 text-sm rounded-lg bg-blue-600 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
                       >
                         <option value="all">Any Price</option>
                         <option value="0-15000">Under ₹15,000</option>
@@ -508,13 +508,13 @@ export default function Home() {
 
                     {/* Rating */}
                     <div>
-                      <label className="block text-sm font-medium mb-2 text-white/80">
+                      <label className="block text-sm font-medium mb-2 text-black/80">
                         Minimum Rating
                       </label>
                       <select
                         value={filters.rating}
                         onChange={(e) => handleFilterChange('rating', Number(e.target.value))}
-                        className="w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
+                        className="w-full px-3 py-2 text-sm rounded-lg bg-blue-600 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
                       >
                         <option value="0">Any Rating</option>
                         <option value="4">4+ Stars</option>
@@ -525,13 +525,13 @@ export default function Home() {
 
                     {/* Activity Type */}
                     <div>
-                      <label className="block text-sm font-medium mb-2 text-white/80">
+                      <label className="block text-sm font-medium mb-2 text-black/80">
                         Activity Type
                       </label>
                       <select
                         value={filters.activity || 'all'}
                         onChange={(e) => handleFilterChange('activity', e.target.value)}
-                        className="w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
+                        className="w-full px-3 py-2 text-sm rounded-lg bg-blue-600 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
                       >
                         {activities.map(activity => (
                           <option key={activity.id} value={activity.id}>
@@ -543,13 +543,13 @@ export default function Home() {
 
                     {/* Duration */}
                     <div>
-                      <label className="block text-sm font-medium mb-2 text-white/80">
+                      <label className="block text-sm font-medium mb-2 text-black/80">
                         Duration
                       </label>
                       <select
                         value={filters.duration || 'all'}
                         onChange={(e) => handleFilterChange('duration', e.target.value)}
-                        className="w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
+                        className="w-full px-3 py-2 text-sm rounded-lg bg-blue-600 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
                       >
                         {durations.map(duration => (
                           <option key={duration.id} value={duration.id}>
@@ -561,13 +561,13 @@ export default function Home() {
 
                     {/* Best Time to Visit */}
                     <div>
-                      <label className="block text-sm font-medium mb-2 text-white/80">
+                      <label className="block text-sm font-medium mb-2 text-black/80">
                         Best Time to Visit
                       </label>
                       <select
                         value={filters.bestTime || ''}
                         onChange={(e) => handleFilterChange('bestTime', e.target.value)}
-                        className="w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
+                        className="w-full px-3 py-2 text-sm rounded-lg bg-blue-600 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
                       >
                         <option value="">Any Time</option>
                         <option value="Jan">January</option>
@@ -587,13 +587,13 @@ export default function Home() {
 
                     {/* Group Size */}
                     <div>
-                      <label className="block text-sm font-medium mb-2 text-white/80">
+                      <label className="block text-sm font-medium mb-2 text-black/80">
                         Group Size
                       </label>
                       <select
                         value={filters.groupSize || 'all'}
                         onChange={(e) => handleFilterChange('groupSize', e.target.value)}
-                        className="w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
+                        className="w-full px-3 py-2 text-sm rounded-lg bg-blue-600 text-white border border-white/20 focus:border-white/40 focus:ring-2 focus:ring-white/20 outline-none"
                       >
                         {groupSizes.map(size => (
                           <option key={size.id} value={size.id}>
@@ -611,7 +611,7 @@ export default function Home() {
       </div>
 
       {/* Categories */}
-      <div className={`py-16 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      {/* <div className={`py-16 ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
         <div className="section-container">
           <div className="flex items-center justify-between mb-10">
             <div>
@@ -648,7 +648,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Popular Destinations */}
       <PopularDestinations darkMode={darkMode} />
